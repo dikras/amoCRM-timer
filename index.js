@@ -7,25 +7,24 @@ const timerEl = document.querySelector('span');
 
 const createTimerAnimator = () => {
   return (seconds) => {
-    if (seconds > 0) {
-      setInterval(() => {
-        const timeSeconds = seconds % 60;;
-        const timeMinutes = seconds / 60 % 60;
-        const timeHours = seconds / 60 /60 % 60;
-  
-        const hoursZero = timeHours < 10 ? '0' : '';
-        const minutesZero = timeMinutes < 10 ? '0' : '';
-        const secondsZero = timeSeconds < 10 ? '0' : '';
-  
+    const timer = setInterval(() => {
+      const timeSeconds = seconds % 60;;
+      const timeMinutes = seconds / 60 % 60;
+      const timeHours = seconds / 60 /60 % 60;
+
+      const hoursZero = timeHours < 10 ? '0' : '';
+      const minutesZero = timeMinutes < 10 ? '0' : '';
+      const secondsZero = timeSeconds < 10 ? '0' : '';
+
+      if (seconds < 0) {
+        clearInterval(timer);
+        alert('Остановка таймера: время вышло');
+      } else {
         const timerTotal = `${hoursZero}${Math.trunc(timeHours)}:${minutesZero}${Math.trunc(timeMinutes)}:${secondsZero}${timeSeconds}`;
         timerEl.innerHTML = timerTotal;
-  
-        --seconds;
-      }, 1000);
-    } else {
-      alert("Время закончилось");
-    }
-    
+      }
+      --seconds;
+    }, 1000);
   };
 };
 
